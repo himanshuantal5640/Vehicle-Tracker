@@ -49,7 +49,28 @@ export const register = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+export const getProfile = async (req, res) => {
+  try {
+    const token = req.cookies.token
 
+    if (!token) {
+      return res.status(401).json({ message: "Not authenticated" })
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET)
+
+    const user = await User.findById(decoded.id).select("-password")
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" })
+    }
+
+    res.json(user)
+
+  } catch (error) {
+    res.status(401).json({ message: "Invalid token" })
+  }
+}
 export const verifyOTP = async (req, res) => {
   const { email, otp } = req.body;
 
@@ -90,3 +111,33 @@ export const logout = (req, res) => {
   res.clearCookie("token");
   res.json({ message: "Logged out" });
 };
+
+export const resendOTP = async (req, res) => {
+  try {
+    const { email } = req.body
+
+    const user = await User.findOne({ email })
+    if (!user) {
+      return res.status(404).json({ message: "User not found" })
+    }
+
+    // Delete old OTPs
+    await OTP.deleteMany({ email })
+
+    const newOTP = crypto.randomInt(100000, 999999).toString()
+
+    await OTP.create({
+      email,
+      otp: newOTP,
+      expiresAt: new Date(Date.now() + 10 * 60 * 1000)
+    })
+
+    await sendOTPEmail(email, newOTP)
+
+    res.json({ message: "OTP resent successfully" })
+
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+}
