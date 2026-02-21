@@ -6,6 +6,8 @@ import StatsStrip from "../sections/StatsStrip"
 import FeatureGrid from "../sections/FeatureGrid"
 import HowItWorks from "../sections/HowItWorks"
 import CTA from "../sections/CTA"
+import Testimonials from "../sections/Testimonials"
+import Metrics from "../sections/Metrics"
 
 export default function Landing() {
   return (
@@ -15,6 +17,8 @@ export default function Landing() {
       <StatsStrip />
       <FeatureGrid />
       <HowItWorks />
+      <Metrics/>
+      <Testimonials/>
       <CTA />
       <Footer />
     </>

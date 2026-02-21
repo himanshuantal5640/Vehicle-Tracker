@@ -8,13 +8,25 @@ body {
   @apply bg-white dark:bg-[#060B16] text-gray-900 dark:text-white;
 }
 
-/* Subtle grid background for dark mode */
+/* Grid background */
 .dark body::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
   background-size: 60px 60px;
   pointer-events: none;
+  z-index: -1;
+}
+
+/* Glow blob */
+.glow-blob {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(34,211,238,0.25), transparent 60%);
+  filter: blur(100px);
+  z-index: -1;
 }
