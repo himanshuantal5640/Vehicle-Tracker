@@ -17,12 +17,12 @@ export default function VerifyOtp() {
 
   const inputsRef = useRef([])
 
-  // Only check once when page loads
+  
   useEffect(() => {
     if (!email) {
       navigate("/register")
     }
-  }, [])  // ← IMPORTANT: empty dependency
+  }, []) 
 
   // Timer logic
   useEffect(() => {
@@ -71,7 +71,7 @@ export default function VerifyOtp() {
 
       toast.success("OTP Verified Successfully")
 
-      setVerified(true)  // prevent redirect issue
+      setVerified(true)  
 
       localStorage.removeItem("otpEmail")
 

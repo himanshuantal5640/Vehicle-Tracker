@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-
 import authRoutes from "./routes/authRoutes.js";
 import tripRoutes from "./routes/tripRoutes.js";
 import alertRoutes from "./routes/alertRoutes.js";
@@ -9,8 +8,8 @@ import vehicleRoutes from "./routes/vehicleRoutes.js";
 import driverRoutes from "./routes/driverRoutes.js";
 import geofenceRoutes from "./routes/geofenceRoutes.js";
 
-const app = express();
 
+const app = express();
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
@@ -21,5 +20,6 @@ app.use("/api/alerts", alertRoutes);
 app.use("/api/vehicles", vehicleRoutes);
 app.use("/api/drivers", driverRoutes);
 app.use("/api/geofence", geofenceRoutes);
+
 
 export default app;

@@ -19,7 +19,7 @@ export default function Register() {
     try {
       await registerUser({ name, email, password });
 
-      // ✅ Store email for OTP verification
+      //Store email for OTP verification
       localStorage.setItem("otpEmail", email);
 
       toast.success("OTP sent to email");

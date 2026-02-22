@@ -14,7 +14,7 @@ export default function useSocket(onMessage) {
     }
 
     socket.onmessage = (event) => {
-  console.log("WS DATA:", event.data)
+  // console.log("WS DATA:", event.data)
   const data = JSON.parse(event.data)
   onMessage(data)
 }

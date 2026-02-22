@@ -16,7 +16,6 @@ router.post("/", authMiddleware, async (req, res) => {
   res.json(driver)
 })
 
-// Update driver
 router.put("/:id", authMiddleware, async (req, res) => {
   const updated = await Driver.findByIdAndUpdate(
     req.params.id,

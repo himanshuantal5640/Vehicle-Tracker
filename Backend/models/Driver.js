@@ -1,14 +1,23 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const driverSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  phone: String,
-  licenseNumber: String,
+  driverName: {
+    type: String,
+    required: true,
+  },
+  vehicleNumber: {
+    type: String,
+    required: true,
+  },
+  lat: Number,
+  lng: Number,
   status: {
     type: String,
-    enum: ["active", "inactive"],
-    default: "active"
-  }
-}, { timestamps: true })
+    enum: ["idle", "active", "delayed"],
+    default: "idle",
+  },
+  heading: Number,
+  speed: Number,
+}, { timestamps: true });
 
-export default mongoose.model("Driver", driverSchema)
+export default mongoose.model("Driver", driverSchema);

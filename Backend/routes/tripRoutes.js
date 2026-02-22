@@ -1,10 +1,18 @@
-import express from "express"
-import { createTrip, getTrips } from "../controllers/tripController.js"
-import authMiddleware from "../middleware/authMiddleware.js"
+import express from "express";
+import {
+  bookTrip,
+  getAllTrips,
+  getTripById,
+  startTrip,
+  completeTrip
+} from "../controllers/tripController.js";
 
-const router = express.Router()
+const router = express.Router();
 
-router.get("/", authMiddleware, getTrips)
-router.post("/", authMiddleware, createTrip)
+router.post("/book", bookTrip);
+router.get("/", getAllTrips);
+router.get("/:id", getTripById);
+router.patch("/:id/start", startTrip);
+router.patch("/:id/complete", completeTrip);
 
-export default router
+export default router;

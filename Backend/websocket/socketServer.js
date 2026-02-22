@@ -16,3 +16,11 @@ export const initSocket = (server) => {
 
   startSimulation(wss);
 };
+
+// 🔥 EXPORT WSS
+export const getWSS = () => {
+  if (!wss) {
+    throw new Error("WebSocket not initialized");
+  }
+  return wss;
+};

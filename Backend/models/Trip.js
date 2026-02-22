@@ -1,25 +1,34 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 
 const tripSchema = new mongoose.Schema({
-  driver: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Driver"
+  tripId: String,
+  driverName: String,
+  vehicleId: String,
+
+  sourceName: String,
+  destinationName: String,
+
+  source: {
+    lat: Number,
+    lng: Number,
   },
-  vehicle: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Vehicle"
+
+  destination: {
+    lat: Number,
+    lng: Number,
   },
-  startLocation: String,
-  destination: String,
-  distance: Number,
+
+  route: [
+    {
+      lat: Number,
+      lng: Number,
+    },
+  ],
+
   status: {
     type: String,
-    enum: ["planned", "ongoing", "completed", "cancelled"],
-    default: "planned"
+    default: "planned",
   },
-  expectedArrival: Date,
-  startTime: Date,
-  endTime: Date
-}, { timestamps: true })
+});
 
-export default mongoose.model("Trip", tripSchema)
+export default mongoose.model("Trip", tripSchema);

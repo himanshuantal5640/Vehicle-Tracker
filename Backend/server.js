@@ -11,13 +11,11 @@ connectDB()
 
 await seedVehicles()
 
-// Create HTTP server
 const server = http.createServer(app)
 
-// Attach WebSocket + startSimulation
 initSocket(server)
 
-// Start server
+
 server.listen(process.env.PORT || 5000, () => {
   console.log(`Server running on port ${process.env.PORT || 5000}`)
 })
