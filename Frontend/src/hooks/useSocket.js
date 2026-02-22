@@ -13,10 +13,15 @@ export default function useSocket(onMessage) {
       console.log("WebSocket Connected")
     }
 
+    // socket.onmessage = (event) => {
+    //   const data = JSON.parse(event.data)
+    //   onMessage(data)
+    // }
     socket.onmessage = (event) => {
-      const data = JSON.parse(event.data)
-      onMessage(data)
-    }
+  console.log("WS DATA:", event.data)
+  const data = JSON.parse(event.data)
+  onMessage(data)
+}
 
     socket.onerror = () => {
       console.log("WebSocket Error")

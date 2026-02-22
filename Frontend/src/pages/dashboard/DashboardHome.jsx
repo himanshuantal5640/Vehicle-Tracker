@@ -1,34 +1,39 @@
-import React, { useEffect } from "react"
-import NavbarAuth from "../../layout/NavbarAuth"
-import MapSection from "../../components/dashboard/MapSection"
-import StatsCards from "../../components/dashboard/StatsCards"
-import useSocket from "../../hooks/useSocket"
-import { useVehicleStore } from "../../store/vehicleStore"
-import { useAlertStore } from "../../store/alertStore"
-import { getTrips } from "../../services/tripService"
-import toast from "react-hot-toast"
+import React, { useEffect } from "react";
+import NavbarAuth from "../../layout/NavbarAuth";
+import MapSection from "../../components/dashboard/MapSection";
+import StatsCards from "../../components/dashboard/StatsCards";
+import useSocket from "../../hooks/useSocket";
+import { useVehicleStore } from "../../store/vehicleStore";
+import { useAlertStore } from "../../store/alertStore";
+import { getTrips } from "../../services/tripService";
+import toast from "react-hot-toast";
+import { useCallback } from "react";
 
 export default function DashboardHome() {
-  const setVehicles = useVehicleStore((state) => state.setVehicles)
-  const updateVehicle = useVehicleStore((state) => state.updateVehicle)
-  const addAlert = useAlertStore((state) => state.addAlert)
+  const setVehicles = useVehicleStore((state) => state.setVehicles);
+  const updateVehicle = useVehicleStore((state) => state.updateVehicle);
+  const addAlert = useAlertStore((state) => state.addAlert);
 
-  useEffect(() => {
-    getTrips()
-      .then((data) => setVehicles(data))
-      .catch(() => toast.error("Failed to fetch trips"))
-  }, [])
+//   useEffect(() => {
+//     getTrips()
+//       .then((data) => setVehicles(data))
+//       .catch(() => toast.error("Failed to fetch trips"));
+//   }, []);
 
-  useSocket((data) => {
-    if (data.type === "VEHICLE_UPDATE") {
-      updateVehicle(data.payload)
-    }
+  const handleSocketMessage = useCallback(
+    (data) => {
+      if (data.type === "VEHICLE_UPDATE") {
+        setVehicles(data.vehicles);
+      }
 
-    if (data.type === "ALERT") {
-      addAlert(data.payload)
-      toast.error(data.payload.message)
-    }
-  })
+      if (data.type === "ALERT") {
+        addAlert(data.alert);
+        toast.error(data.alert.message);
+      }
+    },
+    [setVehicles, addAlert],
+  );
+  useSocket(handleSocketMessage)
 
   return (
     <div className="h-screen flex flex-col bg-[#060B16]">
@@ -41,5 +46,5 @@ export default function DashboardHome() {
         </div>
       </div>
     </div>
-  )
+  );
 }
