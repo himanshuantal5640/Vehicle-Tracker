@@ -12,7 +12,7 @@ import geofenceRoutes from "./routes/geofenceRoutes.js";
 const app = express();
 app.use(cors({ 
     origin:[ "http://localhost:5173",
-    "https://your-frontend-name.vercel.app"],
+    "https://vehicle-tracker-virid-five.vercel.app"],
      credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
