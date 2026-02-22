@@ -6,7 +6,10 @@ import app from "./app.js"
 import http from "http"
 import { initSocket } from "./websocket/socketServer.js"
 
+import { seedVehicles } from "./utils/SeedVehicle.js"
 connectDB()
+
+await seedVehicles()
 
 // Create HTTP server
 const server = http.createServer(app)

@@ -1,38 +1,35 @@
-import { checkGeofence } from "./geofenceService.js";
 
-let vehicles = [
-  { id: "V1", lat: 12.9716, lng: 77.5946, status: "idle" },
-  { id: "V2", lat: 12.9816, lng: 77.6046, status: "in-progress" }
-];
+import Vehicle from "../models/Vehicle.js"
+
 
 function move(vehicle) {
-  vehicle.lat += (Math.random() - 0.5) * 0.001;
-  vehicle.lng += (Math.random() - 0.5) * 0.001;
+  vehicle.lat += (Math.random() - 0.5) * 0.001
+  vehicle.lng += (Math.random() - 0.5) * 0.001
 }
 
 export default function startSimulation(wss) {
   setInterval(async () => {
+
+    const vehicles = await Vehicle.find()
+
     for (let vehicle of vehicles) {
-      move(vehicle);
 
-      const alert = await checkGeofence(vehicle);
-
-      if (alert) {
-        wss.clients.forEach(client => {
-          client.send(JSON.stringify({
-            type: "ALERT",
-            alert
-          }));
-        });
+      // 🔥 MOVE ONLY ACTIVE OR DELAYED
+      if (vehicle.status === "active" || vehicle.status === "delayed") {
+        move(vehicle)
+        await vehicle.save()
       }
+
     }
+
+    const updatedVehicles = await Vehicle.find()
 
     wss.clients.forEach(client => {
       client.send(JSON.stringify({
         type: "VEHICLE_UPDATE",
-        vehicles
-      }));
-    });
+        vehicles: updatedVehicles
+      }))
+    })
 
-  }, 1000);
+  }, 1000)
 }

@@ -34,16 +34,18 @@ export default function MapSection() {
 
       {vehicles.map((vehicle) => (
   <Marker
-    key={vehicle.id + vehicle.lat + vehicle.lng}   // 👈 IMPORTANT
+    key={vehicle.id + vehicle.lat + vehicle.lng}  
     position={[vehicle.lat, vehicle.lng]}
   >
     <Popup>
-      <div>
-        <strong>{vehicle.id}</strong>
-        <br />
-        Status: {vehicle.status}
-      </div>
-    </Popup>
+  <div>
+    <strong>{vehicle.driverName}</strong>
+    <br />
+    {vehicle.vehicleNumber}
+    <br />
+    Status: {vehicle.status}
+  </div>
+</Popup>
   </Marker>
 ))}
 
