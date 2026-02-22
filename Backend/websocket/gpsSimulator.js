@@ -1,22 +1,12 @@
-
+import Alert from "../models/Alert.js"
 import Vehicle from "../models/Vehicle.js"
-
-
-// function move(vehicle) {
-//   vehicle.lat += (Math.random() - 0.5) * 0.001
-//   vehicle.lng += (Math.random() - 0.5) * 0.001
-// }
 function move(vehicle) {
   const deltaLat = (Math.random() - 0.5) * 0.001
   const deltaLng = (Math.random() - 0.5) * 0.001
 
   vehicle.lat += deltaLat
   vehicle.lng += deltaLng
-
-  // Speed calculation (km/h simulated)
   vehicle.speed = Math.floor(Math.random() * 80)
-
-  // Heading (direction angle)
   vehicle.heading = Math.atan2(deltaLng, deltaLat) * (180 / Math.PI)
 }
 
@@ -32,6 +22,20 @@ export default function startSimulation(wss) {
         move(vehicle)
         await vehicle.save()
       }
+      if (vehicle.speed > 70) {
+  await Alert.create({
+    vehicle: vehicle._id,
+    type: "SPEED_LIMIT",
+    message: "Speed limit exceeded"
+  })
+}
+if (vehicle.status === "active" && vehicle.speed === 0) {
+  await Alert.create({
+    vehicle: vehicle._id,
+    type: "IDLE_TOO_LONG",
+    message: "Vehicle idle too long"
+  })
+}
 
     }
 

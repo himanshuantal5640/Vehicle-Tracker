@@ -1,9 +1,21 @@
-import express from "express";
-import { getAlerts } from "../controllers/alertController.js";
-import authMiddleware from "../middleware/authMiddleware.js";
+import express from "express"
+import Alert from "../models/Alert.js"
+import authMiddleware from "../middleware/authMiddleware.js"
 
-const router = express.Router();
+const router = express.Router()
 
-router.get("/", authMiddleware, getAlerts);
+router.get("/", authMiddleware, async (req, res) => {
+  const alerts = await Alert.find().sort({ createdAt: -1 })
+  res.json(alerts)
+})
 
-export default router;
+router.put("/:id/resolve", authMiddleware, async (req, res) => {
+  const alert = await Alert.findByIdAndUpdate(
+    req.params.id,
+    { resolved: true },
+    { new: true }
+  )
+  res.json(alert)
+})
+
+export default router
