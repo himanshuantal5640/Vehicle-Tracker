@@ -7,6 +7,7 @@ export default function PasswordInput({ value, onChange }) {
   return (
     <div className="relative">
       <input
+        placeholder="Enter Your Password"
         type={show ? "text" : "password"}
         value={value}
         onChange={onChange}

@@ -2,9 +2,22 @@
 import Vehicle from "../models/Vehicle.js"
 
 
+// function move(vehicle) {
+//   vehicle.lat += (Math.random() - 0.5) * 0.001
+//   vehicle.lng += (Math.random() - 0.5) * 0.001
+// }
 function move(vehicle) {
-  vehicle.lat += (Math.random() - 0.5) * 0.001
-  vehicle.lng += (Math.random() - 0.5) * 0.001
+  const deltaLat = (Math.random() - 0.5) * 0.001
+  const deltaLng = (Math.random() - 0.5) * 0.001
+
+  vehicle.lat += deltaLat
+  vehicle.lng += deltaLng
+
+  // Speed calculation (km/h simulated)
+  vehicle.speed = Math.floor(Math.random() * 80)
+
+  // Heading (direction angle)
+  vehicle.heading = Math.atan2(deltaLng, deltaLat) * (180 / Math.PI)
 }
 
 export default function startSimulation(wss) {

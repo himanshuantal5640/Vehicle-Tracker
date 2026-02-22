@@ -66,6 +66,15 @@ export default function Register() {
         >
           {loading ? <LoadingSpinner /> : "Create Account"}
         </button>
+        <div className="text-center text-gray-400 text-sm">
+        Already have an account?{" "}
+        <span
+          onClick={() => navigate("/login")}
+          className="text-cyan-400 cursor-pointer hover:underline"
+        >
+          Sign In
+        </span>
+      </div>
       </form>
     </div>
   );
