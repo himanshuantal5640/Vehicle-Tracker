@@ -25,6 +25,25 @@ export default function Login() {
       setLoading(false)
     }
   }
+//   const handleSubmit = async (e) => {
+//   e.preventDefault()
+//   setLoading(true)
+
+//   try {
+//     const res = await loginUser({ email, password })
+
+//     // 🔥 Store token
+//     localStorage.setItem("token", res.data.token)
+
+//     toast.success("Login successful")
+//     navigate("/dashboard")
+
+//   } catch (err) {
+//     toast.error(err.response?.data?.message || "Login failed")
+//   } finally {
+//     setLoading(false)
+//   }
+// }
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#060B16]">
